@@ -1,0 +1,63 @@
+! ============================================================
+! Configuration de base - Switch Cisco
+! Lab Infrastructure Digitale - Hiba Khaddi
+! A adapter avant utilisation : nom, domaine et adresse IP
+! ============================================================
+
+enable
+configure terminal
+
+! Nom de l'equipement et domaine pour SSH
+hostname SW1
+ip domain-name isfo.com
+
+! Securite de base
+enable secret cisco123
+service password-encryption
+no ip domain-lookup
+security passwords min-length 8
+
+! Compte administrateur local
+username admin privilege 15 secret admin123
+
+! Banniere d'avertissement
+banner motd # Acces reserve au personnel autorise #
+
+! Horloge et journalisation
+clock timezone CET 1
+logging synchronous
+
+! Interface d'administration (SVI VLAN 1 - a adapter a ton plan IP)
+interface vlan1
+ description Administration du switch
+ ip address 192.168.1.2 255.255.255.0
+ no shutdown
+exit
+ip default-gateway 192.168.1.1
+
+! Ligne console
+line console 0
+ password cisco123
+ login
+ logging synchronous
+exit
+
+! Generer la cle RSA necessaire pour SSH
+crypto key generate rsa modulus 1024
+
+! Lignes VTY : acces Telnet desactive, SSH uniquement
+line vty 0 15
+ login local
+ transport input ssh
+exit
+
+! Ports d'acces inutilises : a desactiver selon ton lab
+! Exemple pour un seul port :
+! interface fastEthernet0/24
+!  shutdown
+! exit
+
+end
+
+! Sauvegarder la configuration dans la NVRAM
+write memory
