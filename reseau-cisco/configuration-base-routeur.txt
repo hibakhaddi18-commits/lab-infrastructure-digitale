@@ -1,4 +1,11 @@
 ! ============================================================
+! CONFIGURATION DE BASE — EXEMPLE GENERIQUE A ADAPTER
+! Ne pas appliquer telle quelle : adapter les noms, les interfaces
+! et les adresses IP, et CHANGER les mots de passe d'exemple
+! avant tout usage reel. Base en attente d'adaptation aux
+! maquettes Packet Tracer de l'auteure.
+! ============================================================
+! ============================================================
 ! Configuration de base - Routeur Cisco
 ! Lab Infrastructure Digitale - Hiba Khaddi
 ! A adapter avant utilisation : nom, domaine, interface et IP
