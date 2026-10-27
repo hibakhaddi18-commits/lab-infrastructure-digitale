@@ -1,0 +1,33 @@
+! ============================================================
+! Routeur R2 — DHCPv6 stateful + RIPng
+! Affiché « Router4 » dans Packet Tracer.
+! Commandes tapées (version corrigée : le premier
+! « address prefix » avec l'adresse DNS a été rejeté).
+! Gig0/0/0 : 2001:db8:12::2/64 (liaison vers R1)
+! Gig0/0/1 : 2001:db8:20::1/64 (LAN2)
+! ============================================================
+enable
+configure terminal
+hostname R2
+ipv6 unicast-routing
+! --- Pool DHCPv6 stateful ---
+ipv6 dhcp pool lan2
+ address prefix 2001:db8:20::/64
+ dns-server 2001:4860::8888
+exit
+! --- Interface liaison ---
+interface GigabitEthernet0/0/0
+ ipv6 address 2001:db8:12::2/64
+ ipv6 rip TPRIP enable
+ no shutdown
+exit
+! --- Interface LAN ---
+interface GigabitEthernet0/0/1
+ ipv6 address 2001:db8:20::1/64
+ ipv6 rip TPRIP enable
+ ipv6 nd managed-config-flag
+ ipv6 dhcp server lan2
+ no shutdown
+exit
+end
+copy running-config startup-config

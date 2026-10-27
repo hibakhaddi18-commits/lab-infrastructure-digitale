@@ -1,0 +1,33 @@
+! ============================================================
+! Routeur R1 — DHCPv6 stateful + RIPng
+! Affiché « Router3 » dans Packet Tracer.
+! Commandes tapées (version corrigée après les rejets initiaux).
+! ⚠️ Sur les captures, l'adresse LAN + serveur DHCP sont sur
+! Gig0/0/0, alors qu'en IPv4 le LAN est sur Gig0/0/1 :
+! vérifier qu'il ne s'agit pas d'une inversion g0/0/0 ↔ g0/0/1.
+! ============================================================
+enable
+configure terminal
+hostname R1
+ipv6 unicast-routing
+! --- Pool DHCPv6 stateful ---
+ipv6 dhcp pool lan1
+ address prefix 2001:db8:10::/64
+ dns-server 2001:4860::8888
+exit
+! --- Interface LAN (telle que tapée : g0/0/0) ---
+interface GigabitEthernet0/0/0
+ ipv6 address 2001:db8:10::1/64
+ ipv6 rip TPRIP enable
+ ipv6 nd managed-config-flag
+ ipv6 dhcp server lan1
+ no shutdown
+exit
+! --- Interface liaison (telle que tapée : g0/0/1) ---
+interface GigabitEthernet0/0/1
+ ipv6 address 2001:db8:12::1/64
+ ipv6 rip TPRIP enable
+ no shutdown
+exit
+end
+copy running-config startup-config
