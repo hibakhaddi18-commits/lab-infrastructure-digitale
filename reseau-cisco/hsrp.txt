@@ -1,74 +1,142 @@
 ! ============================================================
-! FICHIER A ADAPTER - EXEMPLE DE CONFIGURATION
-! Les adresses IP, noms et mots de passe ci-dessous sont des
-! EXEMPLES tires de la topologie (capture d'ecran).
-! Verifie et adapte-les a ton adressage reel avant usage.
-! Ne pas appliquer tel quel sur un reseau de production.
+! CONFIGURATION HSRP - VALEURS DE TA TABLE D'ADRESSAGE
+! Adresses tirees de ta table d'adressage (capture du 28/10).
+! Points a verifier dans ton TP (voir notes en bas) :
+!   - Passerelle des PC : ta table indique 192.168.1.1 (PC-A)
+!     et 192.168.1.3 (PC-B), alors que la passerelle virtuelle
+!     HSRP est 192.168.1.254. Verifie si les PC doivent utiliser
+!     l'IP virtuelle .254 apres la configuration HSRP.
+!   - Ta table indique S1 et S3 en VLAN 1, ta topologie affiche
+!     S2 et S3 : verifie le nom du commutateur cote PC-A.
+!   - I-Net (R4) de ta table = Router15 de ta topologie ?
+!     A confirmer.
+!   - Passerelle du serveur web : ta table indique 209.165.100.225,
+!     qui n'est pas dans le reseau /27 du serveur
+!     (209.165.200.224/27). A verifier (coquille possible).
+! Les mots de passe restent des exemples : remplace A-CHANGER.
 ! ============================================================
 !
-! Topologie : PC-A - S2 - R1, PC-B - S3 - R3, R1/R2/R3 interconnectes,
-!             Router15, Server web
-! HSRP sur le LAN des PC (S2 et S3 interconnectes) :
-!   R1 = actif (priorite 110, preempt), R3 = secours (priorite 100)
-! Adressage exemple :
-!   LAN PC : 192.168.1.0/24
-!   R1 (Gig0/1) : 192.168.1.2
-!   R3 (Gig0/1) : 192.168.1.3
-!   IP virtuelle HSRP (groupe 1) : 192.168.1.1 = passerelle des PC
-!   MAC virtuelle du groupe 1 : 0000.0c07.ac01
-!
-! ==================== R1 (actif) ====================
+! ==================== R1 (HSRP actif) ====================
 enable
 configure terminal
 hostname R1
 no ip domain-lookup
 enable secret A-CHANGER
 !
+interface GigabitEthernet0/0
+ description Lien vers R2
+ ip address 10.1.1.1 255.255.255.252
+ no shutdown
+!
 interface GigabitEthernet0/1
  description LAN PC vers S2
- ip address 192.168.1.2 255.255.255.0
+ ip address 192.168.1.1 255.255.255.0
  no shutdown
- standby 1 ip 192.168.1.1
+ standby 1 ip 192.168.1.254
  standby 1 priority 110
  standby 1 preempt
 !
-! Suivi du lien amont (optionnel, a adapter selon l'interface amont reelle) :
-! standby 1 track GigabitEthernet0/0
+interface GigabitEthernet0/2
+ description Lien vers R3
+ ip address 10.1.1.9 255.255.255.252
+ no shutdown
 !
-! Routage amont vers le serveur web (exemple, a adapter) :
-! ip route <reseau-serveur-web> <masque> <IP-R2>
+! Route vers le serveur web via R2
+ip route 209.165.200.224 255.255.255.224 10.1.1.2
 end
 write memory
 !
-! ==================== R3 (secours) ====================
+! ==================== R3 (HSRP secours) ====================
 enable
 configure terminal
 hostname R3
 no ip domain-lookup
 enable secret A-CHANGER
 !
-interface GigabitEthernet0/1
+interface GigabitEthernet0/0
  description LAN PC vers S3
  ip address 192.168.1.3 255.255.255.0
  no shutdown
- standby 1 ip 192.168.1.1
+ standby 1 ip 192.168.1.254
  standby 1 priority 100
  standby 1 preempt
 !
-! Routage amont vers le serveur web (exemple, a adapter) :
-! ip route <reseau-serveur-web> <masque> <IP-R2>
+interface GigabitEthernet0/1
+ description Lien vers R2
+ ip address 10.1.1.6 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Lien vers R1
+ ip address 10.1.1.10 255.255.255.252
+ no shutdown
+!
+! Route vers le serveur web via R2
+ip route 209.165.200.224 255.255.255.224 10.1.1.6
 end
 write memory
 !
-! ==================== PC-A / PC-B ====================
-! Passerelle par defaut des PC : 192.168.1.1 (IP virtuelle HSRP)
-! Les PC ne changent jamais de passerelle, meme en cas de bascule.
+! ==================== R2 ====================
+enable
+configure terminal
+hostname R2
+no ip domain-lookup
+enable secret A-CHANGER
+!
+interface GigabitEthernet0/0
+ description Lien vers R1
+ ip address 10.1.1.2 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Lien vers R3
+ ip address 10.1.1.5 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description Lien vers I-Net (R4)
+ ip address 10.100.100.1 255.255.255.252
+ no shutdown
+!
+! Route vers le LAN PC via R1
+ip route 192.168.1.0 255.255.255.0 10.1.1.1
+! Route vers le serveur web via I-Net
+ip route 209.165.200.224 255.255.255.224 10.100.100.2
+end
+write memory
+!
+! ==================== I-Net (R4) ====================
+enable
+configure terminal
+hostname I-Net
+no ip domain-lookup
+enable secret A-CHANGER
+!
+interface GigabitEthernet0/1
+ description Lien vers R2
+ ip address 10.100.100.2 255.255.255.252
+ no shutdown
+!
+! Interface vers le serveur web : non indiquee dans ta table, a completer
+! Route retour vers le LAN PC via R2
+ip route 192.168.1.0 255.255.255.0 10.100.100.1
+end
+write memory
+!
+! ==================== PC-A / PC-B (table d'adressage) ====================
+! PC-A : 192.168.1.101/24, passerelle 192.168.1.1
+! PC-B : 192.168.1.103/24, passerelle 192.168.1.3
+! Serveur web : 209.165.200.226/27, passerelle 209.165.100.225 (voir note en haut)
+!
+! ==================== Commutateurs (VLAN 1) ====================
+! S1/S2 (cote PC-A) et S3 (cote PC-B) : VLAN 1, ports en service (no shutdown)
+! sur les ports relies aux PC, aux routeurs et entre commutateurs.
 !
 ! ==================== Verification ====================
 ! Sur R1 et R3 : show standby | show standby brief
-!   R1 doit afficher "Active", R3 "Standby".
+!   R1 doit afficher "Active", R3 "Standby", IP virtuelle 192.168.1.254.
+! Tests : ping PC-A -> PC-B, ping PC-A -> 209.165.200.226 (serveur web)
 ! Test de bascule : sur R1, shutdown de GigabitEthernet0/1
-!   -> R3 devient actif, les PC gardent la passerelle 192.168.1.1
-!   -> ping depuis PC-A vers le serveur web doit continuer a repondre.
+!   -> R3 devient actif, la passerelle virtuelle 192.168.1.254 reste joignable.
 ! Remettre ensuite l'interface en service : no shutdown (R1 reprend
 ! le role actif grace a preempt et a sa priorite 110).
