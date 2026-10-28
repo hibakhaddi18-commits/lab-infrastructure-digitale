@@ -23,6 +23,8 @@ Ce dépôt présente **mes travaux pratiques** d'administration systèmes et ré
 | 3 | [Rapport d'héritage des GPO](scripts-powershell/Rapport-Heritage-GPO.ps1) | Diagnostiquer l'héritage d'une OU (`Get-GPInheritance`) et générer un rapport `gpresult` en HTML | ✅ Terminé |
 | 4 | [Routage dynamique RIPv2 + DHCPv4, et IPv6 (DHCPv6 + RIPng)](travaux-pratiques/TP-Routage-RIPv2-DHCPv4.md) | Configurer le routage dynamique RIPv2 et RIPng et les serveurs DHCPv4 et DHCPv6 entre deux LAN | ✅ Terminé | 
 | 5 | [Windows Admin Center + Server Core](travaux-pratiques/TP-Windows-Admin-Center-Server-Core.md) | Administrer à distance un serveur Windows Server 2019 Core (sans interface graphique) depuis un navigateur avec Windows Admin Center | ✅ Terminé |
+| 6 | [TP ajout d'une machine au domaine isfo.com (pc-hiba)](travaux-pratiques/TP-Ajout-Machine-Domaine-isfo.md) | Ajouter la machine pc-hiba au domaine Active Directory isfo.com | ✅ Terminé |
+| 7 | [TP configuration du basculement (failover) d'une étendue DHCP](travaux-pratiques/TP-Basculement-Etendues-DHCP.md) | Configurer le basculement (failover) d'une étendue DHCP | ✅ Terminé |
 
 
 **Prochainement** : l'héritage et l'ordre d'application **LSDOU** en pratique, les **PSO** (stratégies de mot de passe granulaires), et le **routage dynamique** (RIP, OSPF, EIGRP, BGP).
