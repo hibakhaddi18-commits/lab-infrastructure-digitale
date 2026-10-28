@@ -1,0 +1,128 @@
+! ============================================================
+! FICHIER A ADAPTER - EXEMPLE DE CONFIGURATION
+! Les adresses IP, noms et mots de passe ci-dessous sont des
+! EXEMPLES tires de la topologie (capture d'ecran).
+! Verifie et adapte-les a ton adressage reel avant usage.
+! Ne pas appliquer tel quel sur un reseau de production.
+! ============================================================
+!
+! Topologie : S1, S2, S3 en triangle, chaque paire reliee par un
+!             bundle EtherChannel (LACP, mode actif, ports en trunk)
+! Bundles (exemple) :
+!   S1 : Po1 vers S2, Po2 vers S3
+!   S2 : Po1 vers S1, Po2 vers S3
+!   S3 : Po1 vers S1, Po2 vers S2
+! Interfaces visibles sur la capture : S1 Gig0/2 et Fa0/22,
+!   S2 Gig0/2 et Fa0/24, S3 Fa0/22 et Fa0/24.
+! Chaque bundle regroupe 2 liens physiques : ajoute le 2e lien
+! physique de chaque bundle dans le meme channel-group
+! (a verifier dans ta maquette).
+!
+! ==================== S1 ====================
+enable
+configure terminal
+hostname S1
+no ip domain-lookup
+!
+! Bundle vers S2
+interface GigabitEthernet0/2
+ description Bundle vers S2 (membre Po1)
+ channel-group 1 mode active
+ no shutdown
+! (Ajouter ici le 2e lien physique vers S2 : channel-group 1 mode active)
+!
+interface Port-channel1
+ description EtherChannel vers S2
+ switchport mode trunk
+ switchport trunk allowed vlan all
+ no shutdown
+!
+! Bundle vers S3
+interface FastEthernet0/22
+ description Bundle vers S3 (membre Po2)
+ channel-group 2 mode active
+ no shutdown
+! (Ajouter ici le 2e lien physique vers S3 : channel-group 2 mode active)
+!
+interface Port-channel2
+ description EtherChannel vers S3
+ switchport mode trunk
+ switchport trunk allowed vlan all
+ no shutdown
+end
+write memory
+!
+! ==================== S2 ====================
+enable
+configure terminal
+hostname S2
+no ip domain-lookup
+!
+! Bundle vers S1
+interface GigabitEthernet0/2
+ description Bundle vers S1 (membre Po1)
+ channel-group 1 mode active
+ no shutdown
+! (Ajouter ici le 2e lien physique vers S1 : channel-group 1 mode active)
+!
+interface Port-channel1
+ description EtherChannel vers S1
+ switchport mode trunk
+ switchport trunk allowed vlan all
+ no shutdown
+!
+! Bundle vers S3
+interface FastEthernet0/24
+ description Bundle vers S3 (membre Po2)
+ channel-group 2 mode active
+ no shutdown
+! (Ajouter ici le 2e lien physique vers S3 : channel-group 2 mode active)
+!
+interface Port-channel2
+ description EtherChannel vers S3
+ switchport mode trunk
+ switchport trunk allowed vlan all
+ no shutdown
+end
+write memory
+!
+! ==================== S3 ====================
+enable
+configure terminal
+hostname S3
+no ip domain-lookup
+!
+! Bundle vers S1
+interface FastEthernet0/22
+ description Bundle vers S1 (membre Po1)
+ channel-group 1 mode active
+ no shutdown
+! (Ajouter ici le 2e lien physique vers S1 : channel-group 1 mode active)
+!
+interface Port-channel1
+ description EtherChannel vers S1
+ switchport mode trunk
+ switchport trunk allowed vlan all
+ no shutdown
+!
+! Bundle vers S2
+interface FastEthernet0/24
+ description Bundle vers S2 (membre Po2)
+ channel-group 2 mode active
+ no shutdown
+! (Ajouter ici le 2e lien physique vers S2 : channel-group 2 mode active)
+!
+interface Port-channel2
+ description EtherChannel vers S2
+ switchport mode trunk
+ switchport trunk allowed vlan all
+ no shutdown
+end
+write memory
+!
+! ==================== Verification ====================
+! Sur S1, S2 et S3 : show etherchannel summary
+!   Chaque Port-channel doit afficher (SU) = en service, avec ses membres (P).
+! Autres controles : show etherchannel port-channel | show interfaces trunk
+! Test : debrancher un lien physique d'un bundle
+!   -> le trafic continue via l'autre lien du bundle (pas de coupure).

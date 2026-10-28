@@ -1,0 +1,71 @@
+! ============================================================
+! FICHIER A ADAPTER - EXEMPLE DE CONFIGURATION
+! Les adresses IP, noms et mots de passe ci-dessous sont des
+! EXEMPLES tires de la topologie (capture d'ecran).
+! Verifie et adapte-les a ton adressage reel avant usage.
+! Ne pas appliquer tel quel sur un reseau de production.
+! ============================================================
+!
+! Topologie : WLC-3504 + Switch 2960 + 3 LAP (Lightweight AP)
+!             + Server0 + PC0 + smartphones / tablettes
+! Adressage exemple :
+!   Management WLC : 192.168.1.10/24, passerelle 192.168.1.1
+!   SSID : WIFI-TP (exemple)
+!   Mot de passe WPA2-PSK : A-CHANGER
+!   Reseau clients WiFi : 192.168.1.0/24, passerelle 192.168.1.1
+!
+! ==================== Switch (2960) ====================
+enable
+configure terminal
+hostname Switch0
+no ip domain-lookup
+!
+! Ports vers les LAP (exemple VLAN 10 pour le WiFi)
+interface range FastEthernet0/1 - 3
+ description Ports LAP
+ switchport mode access
+ switchport access vlan 10
+ no shutdown
+!
+! Port vers le WLC-3504
+interface GigabitEthernet1
+ description Port vers WLC-3504
+ switchport mode access
+ switchport access vlan 10
+ no shutdown
+!
+! Note : si le WLC gere plusieurs SSID/VLAN, passer ces ports en trunk :
+!   switchport mode trunk
+!   switchport trunk allowed vlan all
+end
+write memory
+!
+! ==================== WLC-3504 ====================
+! Dans Packet Tracer, le WLC se configure surtout via son interface web :
+!  1. Management : IP 192.168.1.10, masque 255.255.255.0, passerelle 192.168.1.1
+!  2. Creer le WLAN : WLAN ID 1, SSID WIFI-TP
+!  3. Securite : WPA2-PSK, mot de passe A-CHANGER
+!  4. Activer le WLAN (Status : Enabled)
+!  5. Verifier que les 3 LAP s'associent au WLC (AP Join).
+!
+! Equivalents CLI (AireOS, a titre indicatif) :
+config interface address management 192.168.1.10 255.255.255.0 192.168.1.1
+config wlan create 1 WIFI-TP
+config wlan security wpa akm psk enable 1
+config wlan security wpa akm psk set-key A-CHANGER 1
+config wlan enable 1
+save config
+!
+! ==================== Server0 ====================
+! Si Server0 fait office de serveur DHCP/DNS pour les clients WiFi :
+!   Service DHCP actif, pool 192.168.1.0/24
+!   Passerelle : 192.168.1.1, DNS : 8.8.8.8
+!
+! ==================== Clients (PC0, smartphones, tablettes) ====================
+! Se connecter au SSID WIFI-TP avec le mot de passe,
+! verifier l'adresse IP obtenue, puis ping vers Server0.
+!
+! ==================== Verification (WLC) ====================
+show ap summary
+show wlan summary
+show client summary

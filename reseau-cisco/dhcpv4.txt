@@ -1,0 +1,90 @@
+! ============================================================
+! FICHIER A ADAPTER - EXEMPLE DE CONFIGURATION
+! Les adresses IP, noms et mots de passe ci-dessous sont des
+! EXEMPLES tires de la topologie (capture d'ecran).
+! Verifie et adapte-les a ton adressage reel avant usage.
+! Ne pas appliquer tel quel sur un reseau de production.
+! ============================================================
+!
+! Topologie : PC1 - S1 - R1 - R2 - S2 - PC2
+! Adressage exemple :
+!   Lien R1-R2 : 192.168.12.0/30  (R1 .1, R2 .2)
+!   LAN1 (PC1) : 192.168.10.0/24, passerelle 192.168.10.1 (R1 Gig0/0)
+!   LAN2 (PC2) : 192.168.20.0/24, passerelle 192.168.20.1 (R2 Gig0/1)
+!
+! ==================== R1 : serveur DHCP pour LAN1 ====================
+enable
+configure terminal
+hostname R1
+no ip domain-lookup
+enable secret A-CHANGER
+!
+interface GigabitEthernet0/0
+ description LAN1 vers S1
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description Lien vers R2
+ ip address 192.168.12.1 255.255.255.252
+ no shutdown
+!
+! Adresses exclues (passerelle, serveurs, imprimantes...)
+ip dhcp excluded-address 192.168.10.1 192.168.10.10
+!
+ip dhcp pool LAN1
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ dns-server 8.8.8.8
+ lease 7
+ exit
+!
+! Routage vers LAN2 (pour que PC1 joigne PC2)
+ip route 192.168.20.0 255.255.255.0 192.168.12.2
+end
+write memory
+!
+! ==================== R2 : serveur DHCP pour LAN2 ====================
+enable
+configure terminal
+hostname R2
+no ip domain-lookup
+enable secret A-CHANGER
+!
+interface GigabitEthernet0/0
+ description Lien vers R1
+ ip address 192.168.12.2 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description LAN2 vers S2
+ ip address 192.168.20.1 255.255.255.0
+ no shutdown
+!
+ip dhcp excluded-address 192.168.20.1 192.168.20.10
+!
+ip dhcp pool LAN2
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 8.8.8.8
+ lease 7
+ exit
+!
+! Routage vers LAN1 (pour que PC2 joigne PC1)
+ip route 192.168.10.0 255.255.255.0 192.168.12.1
+end
+write memory
+!
+! ==================== S1 / S2 (base) ====================
+! Sur chaque commutateur : hostname S1 (ou S2), no ip domain-lookup,
+! puis no shutdown sur les ports utilises :
+!   S1 : Fa0/6 (vers PC1), Fa0/5 (vers R1)
+!   S2 : Fa0/5 (vers R2), Fa0/18 (vers PC2)
+!
+! ==================== Verification ====================
+! Sur R1 et R2 : show ip dhcp pool | show ip dhcp binding | show ip dhcp server statistics
+! Sur PC1 et PC2 : ipconfig /renew, puis verifier l'adresse obtenue
+! Tests : ping PC1 -> PC2, ping de la passerelle de chaque LAN
+!
+! Note : si un seul serveur DHCP devait servir les deux LAN, ajouter
+! sur l'interface du routeur relais : ip helper-address <IP-du-serveur-DHCP>
