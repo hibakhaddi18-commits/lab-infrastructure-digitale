@@ -21,7 +21,8 @@ Ce dépôt présente **mes travaux pratiques** d'administration systèmes et ré
 | 1 | [Magasin central des modèles d'administration (ADMX/ADML)](travaux-pratiques/TP-Magasin-Central-ADMX.md) | Centraliser les définitions de stratégie de groupe dans SYSVOL pour que tous les contrôleurs de domaine utilisent les mêmes modèles | ✅ Terminé — 23/10/2026 |
 | 2 | [Création et liaison de GPO en PowerShell](scripts-powershell/Creer-Lier-GPO.ps1) | Créer une GPO et la lier à des OU avec `New-GPLink` (paramètres nommés obligatoires) | ✅ Terminé |
 | 3 | [Rapport d'héritage des GPO](scripts-powershell/Rapport-Heritage-GPO.ps1) | Diagnostiquer l'héritage d'une OU (`Get-GPInheritance`) et générer un rapport `gpresult` en HTML | ✅ Terminé |
-| 4 | [Routage dynamique RIPv2 + DHCPv4, et IPv6 (DHCPv6 + RIPng)](travaux-pratiques/TP-Routage-RIPv2-DHCPv4.md) | Configurer le routage dynamique RIPv2 et RIPng et les serveurs DHCPv4 et DHCPv6 entre deux LAN | ✅ Terminé |
+| 4 | [Routage dynamique RIPv2 + DHCPv4, et IPv6 (DHCPv6 + RIPng)](travaux-pratiques/TP-Routage-RIPv2-DHCPv4.md) | Configurer le routage dynamique RIPv2 et RIPng et les serveurs DHCPv4 et DHCPv6 entre deux LAN | ✅ Terminé | 
+| 5 | [Windows Admin Center + Server Core](travaux-pratiques/TP-Windows-Admin-Center-Server-Core.md) | Administrer à distance un serveur Windows Server 2019 Core (sans interface graphique) depuis un navigateur avec Windows Admin Center | ✅ Terminé |
 
 
 **Prochainement** : l'héritage et l'ordre d'application **LSDOU** en pratique, les **PSO** (stratégies de mot de passe granulaires), et le **routage dynamique** (RIP, OSPF, EIGRP, BGP).
