@@ -26,6 +26,8 @@ Ce dépôt présente **mes travaux pratiques** d'administration systèmes et ré
 | 6 | [TP ajout d'une machine au domaine isfo.com (pc-hiba)](travaux-pratiques/TP-Ajout-Machine-Domaine-isfo.md) | Ajouter la machine pc-hiba au domaine Active Directory isfo.com | ✅ Terminé |
 | 7 | [TP configuration du basculement (failover) d'une étendue DHCP](travaux-pratiques/TP-Basculement-Etendues-DHCP.md) | Configurer le basculement (failover) d'une étendue DHCP | ✅ Terminé |
 | 8 | [Énumération basée sur l'accès (EBA) sur un partage Windows Server](travaux-pratiques/TP-Enumeration-Basee-Acces-EBA.md) | Masquer les dossiers d'un partage aux utilisateurs qui n'y ont pas accès (partage Partage_EBA sur SVR1, dossiers Commun/Hiba/Wiam) | ✅ Terminé — 28/10/2026 |
+| 9 | [Quota FSRM sur le partage Partage_EBA](travaux-pratiques/TP-Quota-FSRM-Partage-EBA.md) | Limiter l'espace du partage (quota inconditionnel, seuil d'alerte à 85 %, modèle « mon quota ») et vérifier le blocage en test réel | ✅ Terminé — 28/10/2026 |
+| 10 | [Filtrage de fichiers FSRM: bloquer les images](travaux-pratiques/TP-Filtrage-Fichiers-FSRM.md) | Empêcher le dépôt de fichiers image dans le partage (filtrage actif, modèle « Bloquer les fichiers image ») | ✅ Terminé — 28/10/2026 |
 
 
 **Prochainement** : l'héritage et l'ordre d'application **LSDOU** en pratique, les **PSO** (stratégies de mot de passe granulaires), et le **routage dynamique** (RIP, OSPF, EIGRP, BGP).
