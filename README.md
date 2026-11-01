@@ -29,6 +29,7 @@ Ce dépôt présente **mes travaux pratiques** d'administration systèmes et ré
 | 9 | [Quota FSRM sur le partage Partage_EBA](travaux-pratiques/TP-Quota-FSRM-Partage-EBA.md) | Limiter l'espace du partage (quota inconditionnel, seuil d'alerte à 85 %, modèle « mon quota ») et vérifier le blocage en test réel | ✅ Terminé — 28/10/2026 |
 | 10 | [Filtrage de fichiers FSRM: bloquer les images](travaux-pratiques/TP-Filtrage-Fichiers-FSRM.md) | Empêcher le dépôt de fichiers image dans le partage (filtrage actif, modèle « Bloquer les fichiers image ») | ✅ Terminé — 28/10/2026 |
 | 11 | [Déduplication des données sur le volume H:](travaux-pratiques/TP-Deduplication-Donnees.md) | Installer la déduplication en PowerShell, l'activer sur le volume H: et lancer un travail d'optimisation | ✅ Terminé |
+| 12 | [Haute disponibilité des services : 2e contrôleur de domaine, espace de noms DFS et réplication DFSR](travaux-pratiques/TP-Haute-Disponibilite-DC2-DFS.md) | Promouvoir un 2e contrôleur de domaine, créer un espace de noms DFS et répliquer le partage avec DFSR | ✅ Terminé |
 
 
 **Prochainement** : l'héritage et l'ordre d'application **LSDOU** en pratique, les **PSO** (stratégies de mot de passe granulaires), et le **routage dynamique** (RIP, OSPF, EIGRP, BGP).
