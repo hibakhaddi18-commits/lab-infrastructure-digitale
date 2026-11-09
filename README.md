@@ -30,6 +30,7 @@ Ce dépôt présente **mes travaux pratiques** d'administration systèmes et ré
 | 10 | [Filtrage de fichiers FSRM: bloquer les images](travaux-pratiques/TP-Filtrage-Fichiers-FSRM.md) | Empêcher le dépôt de fichiers image dans le partage (filtrage actif, modèle « Bloquer les fichiers image ») | ✅ Terminé — 28/10/2026 |
 | 11 | [Déduplication des données sur le volume H:](travaux-pratiques/TP-Deduplication-Donnees.md) | Installer la déduplication en PowerShell, l'activer sur le volume H: et lancer un travail d'optimisation | ✅ Terminé |
 | 12 | [Haute disponibilité des services : 2e contrôleur de domaine, espace de noms DFS et réplication DFSR](travaux-pratiques/TP-Haute-Disponibilite-DC2-DFS.md) | Promouvoir un 2e contrôleur de domaine, créer un espace de noms DFS et répliquer le partage avec DFSR | ✅ Terminé |
+| 13 | [Infrastructure multi-sites IPv6 — EtherChannel, VLAN, RIPng, DHCPv6 Stateful](travaux-pratiques/TP-Infrastructure-IPv6-RIPng-DHCPv6.md) | Mettre en place une infrastructure IPv6 multi-sites (CASA / SETTAT) : EtherChannel, VLAN, routage inter-VLAN, RIPng et DHCPv6 Stateful | ✅ Terminé |
 
 
 **Prochainement** : l'héritage et l'ordre d'application **LSDOU** en pratique, les **PSO** (stratégies de mot de passe granulaires), et le **routage dynamique** (RIP, OSPF, EIGRP, BGP).
