@@ -120,3 +120,13 @@ Les compteurs prouvent le fonctionnement : le ping de la machine bloquée a ét�
 - **Peut-on bloquer HTTP avec une ACL standard ?** Non : une ACL standard ne filtre que sur l'**adresse IP source**. Pour filtrer un protocole ou un port (HTTP = TCP 80), il faut une **ACL étendue**.
 
 ✅ Terminé — 19/11/2026
+
+## Captures de vérification
+
+![Historique CLI des exercices](TP-ACL-Standard-capture-cli-exercices.png)
+
+![show access-lists](TP-ACL-Standard-capture-show-access-lists.png)
+
+![running-config (1)](TP-ACL-Standard-capture-running-config-1.png)
+
+![running-config (2)](TP-ACL-Standard-capture-running-config-2.png)
