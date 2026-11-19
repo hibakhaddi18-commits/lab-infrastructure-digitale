@@ -62,3 +62,17 @@ Validation complète de la ligne : démontage de sdc3, `systemctl daemon-reload`
 | `mount -a` | Appliquer tout le fichier fstab |
 
 ✅ Terminé — 17/11/2026
+
+## Captures du TP
+
+![Capture 01](TP-Disques-Fedora-capture-01.png)
+![Capture 02](TP-Disques-Fedora-capture-02.png)
+![Capture 03](TP-Disques-Fedora-capture-03.png)
+![Capture 04](TP-Disques-Fedora-capture-04.png)
+![Capture 05](TP-Disques-Fedora-capture-05.png)
+![Capture 06](TP-Disques-Fedora-capture-06.png)
+![Capture 07](TP-Disques-Fedora-capture-07.png)
+![Capture 08](TP-Disques-Fedora-capture-08.png)
+![Capture 09](TP-Disques-Fedora-capture-09.png)
+![Capture 10](TP-Disques-Fedora-capture-10.png)
+![Capture 11](TP-Disques-Fedora-capture-11.png)
