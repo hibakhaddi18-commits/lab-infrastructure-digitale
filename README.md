@@ -33,6 +33,7 @@ Ce dépôt présente **mes travaux pratiques** d'administration systèmes et ré
 | 13 | [Infrastructure multi-sites IPv6 — EtherChannel, VLAN, RIPng, DHCPv6 Stateful](travaux-pratiques/TP-Infrastructure-IPv6-RIPng-DHCPv6.md) | Mettre en place une infrastructure IPv6 multi-sites (CASA / SETTAT) : EtherChannel, VLAN, routage inter-VLAN, RIPng et DHCPv6 Stateful | ✅ Terminé |
 | 14 | [ACL standard numérotées et nommées (Packet Tracer)](travaux-pratiques/TP-ACL-Standard.md) | Filtrer le trafic entre 3 LAN avec des ACL standard : bloquer un réseau entier, isoler un LAN, puis bloquer une seule machine avec une ACL nommée | ✅ Terminé — 19/11/2026 |
 | 15 | [Gestion des disques sous Fedora (fdisk, parted, fstab)](travaux-pratiques/TP-Gestion-Disques-Fedora.md) | Partitionner, formater (NTFS et ext4) et monter des disques sous Linux, avec montage permanent via /etc/fstab | ✅ Terminé — 17/11/2026 |
+| 16 | [Supervision du lab isfo.com avec Zabbix et auto-réparation](travaux-pratiques/TP-Supervision-Zabbix.md) | Installer un serveur Zabbix 7.0 sur Ubuntu Server, superviser SVR1 et SVR_2 (agents, services AD DS/DNS/DHCP/DFS), créer le tableau de bord « Parc isfo.com » et une auto-réparation qui redémarre seule le service DHCP arrêté (prouvé en 1 minute) | ✅ Terminé — 20/11/2026 |
 
 
 **Prochainement** : l'héritage et l'ordre d'application **LSDOU** en pratique, les **PSO** (stratégies de mot de passe granulaires), et le **routage dynamique** (RIP, OSPF, EIGRP, BGP).
@@ -49,7 +50,7 @@ Ce dépôt présente **mes travaux pratiques** d'administration systèmes et ré
 ## 🛠️ Compétences mises en pratique
 
 
-Administration Windows Server 2019 · Active Directory · Stratégies de groupe (création, liaison, héritage LSDOU, magasin central, préférences GPP, PSO) · DNS · DHCP · TCP/IP · VLAN · PowerShell · Routage et commutation Cisco
+Administration Windows Server 2019 · Active Directory · Stratégies de groupe (création, liaison, héritage LSDOU, magasin central, préférences GPP, PSO) · DNS · DHCP · TCP/IP · VLAN · PowerShell · Routage et commutation Cisco · Supervision Zabbix 7.0 (serveur, agents, déclencheurs, tableau de bord, auto-réparation)
 
 
 ## 🎓 Certifications et formation
